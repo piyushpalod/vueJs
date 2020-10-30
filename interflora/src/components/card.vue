@@ -14,15 +14,12 @@
             @keyup="textChanged"
           ></textarea>
 
-          
-          <input class="form-control form-control-lg mt-5" id="category" type="text" v-model="category" 
-          placeholder="Write a category">
-
-          <div class="mt-5">Or </div>   
-
-          <select class="form-control form-control-lg mt-5" v-model="categoryList" v-on:change="clearCategory">
+          <select v-if="textBoxInput.length > 0" class="form-control form-control-lg mt-5" v-model="categoryList" v-on:change="clearCategory">
             <option v-bind:key="option.value" v-for="option in categories">{{ option.name }}</option>>
           </select>
+
+          <input v-if="categoryList === 'choose your own' " class="form-control form-control-lg mt-5" id="category" type="text" v-model="category" 
+          placeholder="Write a category">
         </div>
         <div>
           <button class="btn btn-dark btn-lg btn-block mt-5" v-on:click="saveCard">Add Greeting</button>
@@ -31,13 +28,12 @@
 
       <div class="saved-cards">
                 <h2>Your saved cards</h2>
-                <span v-if="!savedCards">{{ noSavedCards }}</span>
+                <span v-if="savedCards.length === 0">{{ noSavedCards }}</span>
                 <ul>
                     <li v-for="(value, index) in savedCards"  v-bind:key="index" v-html="value">
                     </li>
                 </ul>
-            </div>
-
+      </div>
     </div>
 </template>
 
@@ -49,7 +45,7 @@ export default {
   },
   data() {
         return {
-            text: "Test text",
+            textBoxInput: "",
             noSavedCards: "You have no cards saved",
             category: "",
             categoryList: "",
@@ -59,6 +55,7 @@ export default {
                 {value: "graduation", name: "Happy Graduated"},
                 {value: "mothersday", name: "Happy Mother's day"},
                 {value: "easter", name: "Happy Easter"},
+                {value: "choose your own", name: "choose your own"},
             ],
             savedCards: [],
         }
