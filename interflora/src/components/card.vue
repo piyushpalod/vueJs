@@ -14,9 +14,13 @@
             @keyup="textChanged"
           ></textarea>
 
-          <select v-if="textBoxInput.length > 0" class="form-control form-control-lg mt-5" v-model="categoryList" v-on:change="clearCategory">
+          <div class="mt-5" v-if="textBoxInput.length > 0" >
+          <label  for="categories">choose a category</label>
+          <select class="form-control form-control-lg" v-model="categoryList" v-on:change="clearCategory">
             <option v-bind:key="option.value" v-for="option in categories">{{ option.name }}</option>>
           </select>
+          </div>
+          
 
           <input v-if="categoryList === 'choose your own' " class="form-control form-control-lg mt-5" id="category" type="text" v-model="category" 
           placeholder="Write a category">
